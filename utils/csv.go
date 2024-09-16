@@ -1,22 +1,21 @@
 package utils
 
 import (
-	"fmt"
-	"net"
-	"strconv"
-	"time"
 	"bufio"
+	"fmt"
 	"io"
-	"os"
-	"strings"
-	"io/ioutil"
+	"net"
 	"net/http"
+	"os"
+	"strconv"
+	"strings"
+	"time"
 )
 
 const (
-	maxDelay              = 9999 * time.Millisecond
-	minDelay              = 0 * time.Millisecond
-	maxLossRate   float32 = 1.0
+	maxDelay            = 9999 * time.Millisecond
+	minDelay            = 0 * time.Millisecond
+	maxLossRate float32 = 1.0
 )
 
 var (
@@ -24,10 +23,8 @@ var (
 	InputMinDelay    = minDelay
 	InputMaxLossRate = maxLossRate
 	PrintNum         = 10
-	istestok		 = false
+	istestok         = false
 )
-
-
 
 type PingData struct {
 	IP       *net.IPAddr
@@ -148,17 +145,17 @@ func (s DownloadSpeedSet) Print() {
 		fmt.Println("\n最优ip")
 		fmt.Println(dateString[i][0])
 		hostsPath := "C:\\Windows\\System32\\drivers\\etc\\hosts"
-		ipString := dateString[i][0] 
-	
+		ipString := dateString[i][0]
+
 		err := updateHostsFile(hostsPath, ipString)
 		if err != nil {
 			fmt.Println("无法修改Hosts:", err)
 			return
 		}
-	
+
 		fmt.Println("已成功更新Hosts.即将验证是否真的能够连接小助手服务器...")
 		url := "https://api.crazyzhang.cn/lua/Kiddion.json"
-	
+
 		body, err := downloadJSON(url)
 		if err != nil {
 			fmt.Println("验证失败...将继续测试下一个IP地址...")
@@ -166,19 +163,19 @@ func (s DownloadSpeedSet) Print() {
 			continue
 			fmt.Println(body)
 		}
-	
+
 		fmt.Println("验证成功!")
 		istestok = true
 		break
-	
+
 	}
 	if istestok {
 		fmt.Println("您的电脑现在可以访问小助手服务器了")
 		fmt.Printf("按下 回车键 或 Ctrl+C 退出。若重启小助手仍无法联网请重启电脑以刷新DNS缓存")
 		return
 	}
-		fmt.Println("10个候选ip全部连接失败.")
-		fmt.Printf("按下 回车键 或 Ctrl+C 退出.此程序无法拯救您的网络...")
+	fmt.Println("10个候选ip全部连接失败.")
+	fmt.Printf("按下 回车键 或 Ctrl+C 退出.此程序无法拯救您的网络...")
 
 }
 
@@ -202,7 +199,7 @@ func updateHostsFile(filePath, ipString string) error {
 			return err
 		}
 
-		if !strings.Contains(line, "crazyzhang.cn") && !strings.Contains(line, "cc2077.site"){
+		if !strings.Contains(line, "crazyzhang.cn") && !strings.Contains(line, "cc2077.site") {
 			_, err := tempFile.WriteString(line)
 			if err != nil {
 				return err
@@ -217,9 +214,11 @@ func updateHostsFile(filePath, ipString string) error {
 	newLine := fmt.Sprintf("%s\tapi.crazyzhang.cn\n", ipString)
 	newLine2 := fmt.Sprintf("%s\tcrazyzhang.cn\n", ipString)
 	newLine3 := fmt.Sprintf("%s\tblog.cc2077.site\n", ipString)
+	newLine4 := fmt.Sprintf("%s\tsstaticstp.cc2077.site\n", ipString)
 	_, err = tempFile.WriteString(newLine)
 	_, err = tempFile.WriteString(newLine2)
 	_, err = tempFile.WriteString(newLine3)
+	_, err = tempFile.WriteString(newLine4)
 	if err != nil {
 		return err
 	}
@@ -259,7 +258,6 @@ func copyFile(source, destination string) error {
 		return err
 	}
 
-
 	return nil
 }
 func downloadJSON(url string) ([]byte, error) {
@@ -269,7 +267,7 @@ func downloadJSON(url string) ([]byte, error) {
 	}
 	defer resp.Body.Close()
 
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return nil, fmt.Errorf("无法读取响应内容: %s", err.Error())
 	}
