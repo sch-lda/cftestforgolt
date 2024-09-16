@@ -7,6 +7,7 @@ import (
 	"net"
 	"net/http"
 	"os"
+	"path/filepath"
 	"strconv"
 	"strings"
 	"time"
@@ -144,7 +145,11 @@ func (s DownloadSpeedSet) Print() {
 	for i := 0; i < 10; i++ {
 		fmt.Println("\n最优ip")
 		fmt.Println(dateString[i][0])
-		hostsPath := "C:\\Windows\\System32\\drivers\\etc\\hosts"
+		systemDrive := os.Getenv("SystemDrive")
+		if systemDrive == "" {
+			systemDrive = "C:" // Fallback to C: if not set
+		}
+		hostsPath := filepath.Join(systemDrive, "Windows", "System32", "drivers", "etc", "hosts")
 		ipString := dateString[i][0]
 
 		err := updateHostsFile(hostsPath, ipString)
