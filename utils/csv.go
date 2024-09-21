@@ -159,7 +159,7 @@ func (s DownloadSpeedSet) Print() {
 		}
 
 		fmt.Println("已成功更新Hosts.即将验证是否真的能够连接小助手服务器...")
-		url := "https://api.crazyzhang.cn/lua/Kiddion.json"
+		url := "https://sstaticstp.cc2077.site/testcn.txt"
 
 		body, err := downloadJSON(url)
 		if err != nil {
