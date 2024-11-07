@@ -147,7 +147,9 @@ func (s DownloadSpeedSet) Print() {
 		fmt.Println(dateString[i][0])
 		systemDrive := os.Getenv("SystemDrive")
 		if systemDrive == "" {
-			systemDrive = "C:" // Fallback to C: if not set
+			systemDrive = "C:\\"
+		} else if !strings.HasSuffix(systemDrive, "\\") {
+			systemDrive += "\\"
 		}
 		hostsPath := filepath.Join(systemDrive, "Windows", "System32", "drivers", "etc", "hosts")
 		ipString := dateString[i][0]
