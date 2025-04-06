@@ -161,7 +161,7 @@ func (s DownloadSpeedSet) Print() {
 		}
 
 		fmt.Println("已成功更新Hosts.即将验证是否真的能够连接小助手服务器...")
-		url := "https://sstaticstp.cc2077.site/testcn.txt"
+		url := "https://sstaticstp.1007890.xyz/testcn.txt"
 
 		body, err := downloadJSON(url)
 		if err != nil {
@@ -206,7 +206,7 @@ func updateHostsFile(filePath, ipString string) error {
 			return err
 		}
 
-		if !strings.Contains(line, "crazyzhang.cn") && !strings.Contains(line, "cc2077.site") {
+		if !strings.Contains(line, "crazyzhang.cn") && !strings.Contains(line, "1007890.xyz") {
 			_, err := tempFile.WriteString(line)
 			if err != nil {
 				return err
@@ -220,8 +220,8 @@ func updateHostsFile(filePath, ipString string) error {
 
 	newLine := fmt.Sprintf("%s\tapi.crazyzhang.cn\n", ipString)
 	newLine2 := fmt.Sprintf("%s\tcrazyzhang.cn\n", ipString)
-	newLine3 := fmt.Sprintf("%s\tblog.cc2077.site\n", ipString)
-	newLine4 := fmt.Sprintf("%s\tsstaticstp.cc2077.site\n", ipString)
+	newLine3 := fmt.Sprintf("%s\tblog.1007890.xyz\n", ipString)
+	newLine4 := fmt.Sprintf("%s\tsstaticstp.1007890.xyz\n", ipString)
 	_, err = tempFile.WriteString(newLine)
 	_, err = tempFile.WriteString(newLine2)
 	_, err = tempFile.WriteString(newLine3)
