@@ -206,7 +206,7 @@ func updateHostsFile(filePath, ipString string) error {
 			return err
 		}
 
-		if !strings.Contains(line, "crazyzhang.cn") && !strings.Contains(line, "1007890.xyz") {
+		if !strings.Contains(line, "1007890.xyz") {
 			_, err := tempFile.WriteString(line)
 			if err != nil {
 				return err
@@ -218,16 +218,16 @@ func updateHostsFile(filePath, ipString string) error {
 		}
 	}
 
-	newLine := fmt.Sprintf("%s\tapi.crazyzhang.cn\n", ipString)
-	newLine2 := fmt.Sprintf("%s\tcrazyzhang.cn\n", ipString)
 	newLine3 := fmt.Sprintf("%s\tblog.1007890.xyz\n", ipString)
 	newLine4 := fmt.Sprintf("%s\tsstaticstp.1007890.xyz\n", ipString)
-	_, err = tempFile.WriteString(newLine)
-	_, err = tempFile.WriteString(newLine2)
-	_, err = tempFile.WriteString(newLine3)
-	_, err = tempFile.WriteString(newLine4)
-	if err != nil {
-		return err
+	newLine5 := fmt.Sprintf("%s\tantfcc0.1007890.xyz\n", ipString)
+	newLine6 := fmt.Sprintf("%s\tredrpcapi.1007890.xyz\n", ipString)
+
+	for _, line := range []string{newLine3, newLine4, newLine5, newLine6} {
+		_, err := tempFile.WriteString(line)
+		if err != nil {
+			return err
+		}
 	}
 
 	err = file.Close()
@@ -242,6 +242,7 @@ func updateHostsFile(filePath, ipString string) error {
 
 	return nil
 }
+
 func copyFile(source, destination string) error {
 	sourceFile, err := os.Open(source)
 	if err != nil {
